@@ -5,8 +5,8 @@
 class CameraController
 {
 public:
-    CameraController() : camera(nullptr), scale{0.007}, leftMouseButtonPressed{false} {}
-    CameraController(Camera* cameraInit) : camera(cameraInit), scale{0.007}, leftMouseButtonPressed{false} {}
+    CameraController() : camera(nullptr), scale{0.02}, leftMouseButtonPressed{false} {}
+    CameraController(Camera* cameraInit) : camera(cameraInit), scale{0.02}, leftMouseButtonPressed{false} {}
 
     void set_camera(Camera* cameraInit)
     {

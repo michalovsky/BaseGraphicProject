@@ -53,7 +53,6 @@ private:
     GLuint u_pvm_buffer;
     std::unique_ptr<Camera> camera;
     std::unique_ptr<CameraController> cameraController;
-    glm::mat4 model;
     std::chrono::steady_clock::time_point start;
     float rotationPeriod = 4.0f;
     float orbitalRotationPeriod = 20.0f;

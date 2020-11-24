@@ -46,12 +46,10 @@ void SimpleShapeApplication::init()
     auto zFar = 100.0f;
     camera->setProjection(fovy, aspect, zNear, zFar);
     camera->lookAt(
-        glm::vec3(2.5f, 50.0f, 5.0f),
+        glm::vec3(2.5f, 30.0f, 5.0f),
         glm::vec3(-1.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 1.0f, 0.0f)
     );
-    model = glm::mat4(1.0f);
-
 
 //    GLuint u_light_buffer;
 //    glGenBuffers(1, &u_light_buffer);
@@ -132,16 +130,16 @@ void SimpleShapeApplication::frame()
     pyramid->draw();
 
     auto orbital_rotation_angle = 2.0f * glm::pi<float>() * elapsed_time / orbitalRotationPeriod;
-    auto x = 1 * cos(orbital_rotation_angle);
-    auto z = 1 * sin(orbital_rotation_angle);
-    model = glm::translate(model, glm::vec3(x, 0, z));
+    auto x = 10 * cos(orbital_rotation_angle);
+    auto z = 8 * sin(orbital_rotation_angle);
+    glm::mat4 O = glm::translate(glm::mat4(1.0f), glm::vec3(x, 0, z));
 //    auto rotation_angle = 2.0f * glm::pi<float>() * elapsed_time / rotationPeriod;
 
-    model = glm::rotate(model, glm::radians(0.f), glm::vec3(1.0f, 0.0f, 0.0f));
-    model = glm::rotate(model, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f));
-    model = glm::rotate(model, glm::radians(0.f), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::scale(model, glm::vec3(1.0f));
-
+    glm::mat4 R = glm::rotate(glm::mat4(1.0f), glm::radians(0.f), glm::vec3(1.0f, 0.0f, 0.0f));
+    R = glm::rotate(R, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f));
+    R = glm::rotate(R, glm::radians(0.f), glm::vec3(0.0f, 0.0f, 1.0f));
+//    R = glm::scale(R, glm::vec3(1.0f));
+    auto model = O*R;
 
     glm::mat4 pvm = camera->getProjection() * camera->getView() * model;
     glBindBuffer(GL_UNIFORM_BUFFER, u_pvm_buffer);
