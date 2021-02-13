@@ -46,8 +46,8 @@ void SimpleShapeApplication::init()
     auto zFar = 100.0f;
     camera->setProjection(fovy, aspect, zNear, zFar);
     camera->lookAt(
-        glm::vec3(5.5f, 10.0f, 12.0f),
-        glm::vec3(2.0f, 3.0f, -3.0f),
+        glm::vec3(-2.5f, 2.0f, -2.5f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 1.0f, 0.0f)
     );
 

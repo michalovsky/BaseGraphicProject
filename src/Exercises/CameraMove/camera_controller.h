@@ -5,8 +5,8 @@
 class CameraController
 {
 public:
-    CameraController() : camera(nullptr), scale{0.01}, leftMouseButtonPressed{false} {}
-    CameraController(Camera* cameraInit) : camera(cameraInit), scale{0.01}, leftMouseButtonPressed{false} {}
+    CameraController() : camera(nullptr), scale{0.1}, leftMouseButtonPressed{false} {}
+    CameraController(Camera* cameraInit) : camera(cameraInit), scale{0.1}, leftMouseButtonPressed{false} {}
 
     void set_camera(Camera* cameraInit)
     {
@@ -16,7 +16,7 @@ public:
     void rotate_camera(float dx, float dy)
     {
         camera->rotate_around_center(-scale * dy, camera->getX());
-        camera->rotate_around_center(-scale * dx, glm::vec3{0.0f, 0.0f, 1.0f});
+        camera->rotate_around_center(-scale * dx, camera->getY());
     }
     void mouse_moved(float x, float y)
     {
