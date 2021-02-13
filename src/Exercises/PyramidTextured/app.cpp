@@ -117,7 +117,8 @@ void SimpleShapeApplication::cursor_position_callback(double x, double y)
 
 void SimpleShapeApplication::frame()
 {
-    auto PVM = getCamera()->getProjection() * getCamera()->getView() * glm::mat4(1.0f);
+    auto PVM = camera->getProjection() * camera->getView() * glm::mat4(1.0f);
+    glBindBuffer(GL_UNIFORM_BUFFER, u_pvm_buffer);
     glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), &PVM[0]);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
     pyramid->draw();
