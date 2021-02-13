@@ -12,10 +12,6 @@
 
 void SimpleShapeApplication::init()
 {
-    pyramid = std::make_unique<Pyramid>();
-    camera = std::make_unique<Camera>();
-    cameraController = std::make_unique<CameraController>(camera.get());
-
     auto program = xe::create_program(std::string(PROJECT_DIR) + "/shaders/base_vs.glsl",
                                       std::string(PROJECT_DIR) + "/shaders/base_fs.glsl");
 
@@ -27,6 +23,16 @@ void SimpleShapeApplication::init()
                   << " shader files" << std::endl;
     }
 
+    auto u_diffuse_map_location = glGetUniformLocation(program, "diffuse_map");
+    if (u_diffuse_map_location == -1)
+    {
+        std::cerr << "Cannot find uniform diffuse_map\n";
+    }
+    else
+    {
+        glUniform1ui(u_diffuse_map_location, 0);
+    }
+
     auto u_transformations_index = glGetUniformBlockIndex(program, "Transformations");
     if (u_transformations_index == GL_INVALID_INDEX)
     {
@@ -36,6 +42,10 @@ void SimpleShapeApplication::init()
     {
         glUniformBlockBinding(program, u_transformations_index, 1);
     }
+
+    pyramid = std::make_unique<Pyramid>();
+    camera = std::make_unique<Camera>();
+    cameraController = std::make_unique<CameraController>(camera.get());
 
     int w, h;
     std::tie(w, h) = frame_buffer_size();
@@ -60,16 +70,6 @@ void SimpleShapeApplication::init()
     glUseProgram(program);
 
     start = std::chrono::steady_clock::now();
-
-    auto u_diffuse_map_location = glGetUniformLocation(program, "diffuse_map");
-    if (u_diffuse_map_location == -1)
-    {
-        std::cerr << "Cannot find uniform diffuse_map\n";
-    }
-    else
-    {
-        glUniform1ui(u_diffuse_map_location, 0);
-    }
 }
 
 void SimpleShapeApplication::framebuffer_resize_callback(int w, int h)
